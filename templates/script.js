@@ -1,23 +1,22 @@
-let record_btn = document.getElementById("record_btn")
 
 
 function setValue(res) {
     console.log(res)
 }
 
-record_btn.addEventListener("click",(ev)=>{
+document.getElementById("record_btn").addEventListener("click",(ev)=>{
     
     let record_btn = document.getElementById("record_btn")
-    console.log(record_btn.getAttribute("status"))
     const file_name = document.getElementById("voice_name")
-    
-    if(record_btn.getAttribute("status") == "False"){
+
+
+    if(record_btn.getAttribute("state") == "False"){
+        record_btn.setAttribute("state","True")
         eel.Record(file_name.value)(setValue)
     }
     else{
-        record_btn.setAttribute.status = "True"
+        record_btn.setAttribute("state","False")
     }
-    
     
 })
 
@@ -25,11 +24,26 @@ record_btn.addEventListener("click",(ev)=>{
 eel.expose(Check_Recording);
 function Check_Recording() {
     let record_btn = document.getElementById("record_btn")
-    if(record_btn.getAttribute("status") == "False"){
-        return false
+    if(record_btn.getAttribute("state") == "False"){
+        
+        return "false"
     }
     else{
-        return true
+        return "true"
     }
 
+}
+
+eel.expose(Set_Mics);
+function Set_Mics(input_devices){
+    let mic_select= document.getElementById('input_devices')
+    const devices = Object.entries(input_devices)
+    devices.forEach(element => {
+        console.log(element)
+        let new_el = document.createElement("option")
+        new_el.setAttribute("item_id",element[0].toString())
+        new_el.innerHTML = element[1]
+        mic_select.appendChild(new_el)
+    });
+    return
 }
